@@ -1,23 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   map_parser.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kwang <kwang@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/23 21:57:25 by kwang             #+#    #+#             */
-/*   Updated: 2022/09/23 21:57:26 by kwang            ###   ########.fr       */
+/*   Created: 2022/09/23 21:57:22 by kwang             #+#    #+#             */
+/*   Updated: 2022/09/23 21:57:24 by kwang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int main(int argc, char **argv){
-	
-	if (argc == 2)
-	{
+#include "cub3d.h"
 
-	}
-	else
-		printf("Usage: %s [<MAP_NAME>.cub]\n", argv[0]);
+void	parse_map(const char *filename, t_map *map)
+{
+	int		fd;
 
-	return 0;
+	check_ext(filename, "cub");
+	*map = (t_map){.board = NULL};
+	fd = open(filename, O_RDONLY);
+	if (fd == -1)
+		error_handler("Failure to open file", "parse_map", 0);
+	cache_map(fd, map);
+	close(fd);
+	is_valid_map(map);
 }
