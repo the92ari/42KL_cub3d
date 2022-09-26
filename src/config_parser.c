@@ -6,7 +6,7 @@
 /*   By: kwang <kwang@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 21:57:22 by kwang             #+#    #+#             */
-/*   Updated: 2022/09/26 22:27:10 by kwang            ###   ########.fr       */
+/*   Updated: 2022/09/26 23:28:11 by kwang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ function call.
 Return value:
 Returns nothing. Throws errors structure fails to be completely populated.
 */
-static void check_set_config(t_textures	*textures, const char **config_cache)
+static void set_texture_config(t_textures *textures, const char **config_cache)
 {
 	size_t		i;
 
@@ -71,7 +71,7 @@ static void check_set_config(t_textures	*textures, const char **config_cache)
 		i++;
 	}
 	if (!check_textures_set(*textures))
-		error_handler("Incomplete amount of textures", "check_set_config", 0);
+		error_handler("Incomplete amount of textures", "set_texture_config", 0);
 }
 
 /*
@@ -139,9 +139,9 @@ void	parse_config(const char *filename, t_vars *vars)
 	if (fd == -1)
 		error_handler("Failure to open file", "parse_map", 0);
 	cache_config(fd, &config_cache);
-	check_set_config(&textures, config_cache);
-	// validate_config
-	// cache_textures(&vars->texture_cache, &config_cache);
+	set_texture_config(&textures, config_cache);
+	validate_texture_config(textures);
+	// cache_textures(&vars->texture_cache, textures);
 	// cache_map(&vars->map);
 	// check_map(&vars->map);
 	close(fd);

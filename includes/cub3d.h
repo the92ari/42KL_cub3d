@@ -5,6 +5,8 @@
 # include <errno.h>
 # include <stdlib.h>
 # include <stdbool.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 # include <fcntl.h>
 # include <math.h>
 # include "../libft/libft.h"
@@ -77,9 +79,17 @@ void	check_valid_ext(const char *filename, const char *ext_to_check);
 void	parse_config(const char *filename, t_vars *vars);
 
 // config_parser.c
+void	parse_config(const char *filename, t_vars *vars);
+
+// config_validator.c
+void	validate_texture_config(t_texture textures);
+
+// config_parsing_utils.c
 int		check_textures_set(const t_textures textures);
 int		is_str_empty(const char* str);
 int		is_str_map(const char *str);
+int		is_rgb_value(const char *str);
+
 
 
 #endif

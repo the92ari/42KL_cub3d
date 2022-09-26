@@ -73,3 +73,26 @@ int is_str_map(const char *str)
 	}
 	return (true);
 }
+
+/*
+Parameters:
+str - string to be checked.
+
+Description:
+Iterates through str to check for only digit characters in the string.
+
+Return value:
+Returns true if all characters are digits; false otherwise
+*/
+int	is_rgb_value(const char *str)
+{
+	int	i;
+
+	i = -1;
+	while (str[++i] != '\0')
+	{
+		if (!ft_isdigit(str[i]))
+			return (false);
+	}
+	return (true);
+}
