@@ -6,11 +6,14 @@
 #    By: kwang <kwang@student.42kl.edu.my>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/26 17:03:19 by kwang             #+#    #+#              #
-#    Updated: 2021/10/26 17:03:22 by kwang            ###   ########.fr        #
+#    Updated: 2022/09/25 22:57:14 by kwang            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS =	src/main.c 
+SRCS =	src/main.c \
+		src/error_handler \
+		src/file_validator \
+		src/config_handler \
 
 OBJS = $(SRCS:.c=.o)
 
@@ -33,6 +36,8 @@ NAME = cub3d
 all : $(NAME)
 
 $(LIBFT) :
+	@git submodule init
+	@git submodule update
 	@make -C $(LIBFTDIR) all
 
 $(MLX) :
