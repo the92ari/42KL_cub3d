@@ -60,8 +60,8 @@ typedef struct s_cache
 
 typedef struct s_config
 {
-	t_cache	texture_cache;
-	char	**map;
+	t_textures	textures_config;
+	char		**map;
 }	t_config;
 
 typedef struct s_vars
@@ -81,7 +81,7 @@ void	error_handler(const char *msg, const char *func, int err_no);
 void	validate_ext(const char *filename, const char *ext_to_check);
 
 // config_parser.c
-void	parse_config(const char *filename, t_vars *vars);
+void	parse_config(const char *filename, t_config *config);
 
 // config_validator.c
 void	validate_texture_config(t_textures textures);
@@ -91,7 +91,5 @@ int		check_textures_set(const t_textures textures);
 int		is_str_empty(const char* str);
 int		is_str_map(const char *str);
 int		is_rgb_value(const char *str);
-
-
 
 #endif

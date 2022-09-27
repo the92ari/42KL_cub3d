@@ -6,11 +6,12 @@
 /*   By: kwang <kwang@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 21:57:22 by kwang             #+#    #+#             */
-/*   Updated: 2022/09/27 22:28:08 by kwang            ###   ########.fr       */
+/*   Updated: 2022/09/28 00:35:21 by kwang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+#include <string.h>
 
 /*
 Parameters:
@@ -117,6 +118,33 @@ static void	cache_config(int fd, char ***config_cache)
 
 /*
 Parameters:
+map - address of map variable to be used by game logic
+map_config - address map config obtained from config file
+
+Description:
+Takes a pointer to a nested array of a map and duplicates it into a map
+variable to be used by game logic.
+
+Return value:
+Returns nothing.
+*/
+static void	cache_map(char ***map, char **map_config)
+{
+	size_t	i;
+
+	i = 0;
+	*map = malloc(sizeof(char *) * (ft_2darrlen(map_config) + 1));
+	while (map_config[i] != NULL)
+	{
+		printf("%s\n", map_config[i]);
+		(*map)[i] = strdup(map_config[i]);
+		++i;
+	}
+	(*map)[i] = NULL;
+}
+
+/*
+Parameters:
 filename - string that represent config file in .cub extension
 vars - address of custom data structure that holds essential program data
 
@@ -128,22 +156,21 @@ data structure.
 Return value:
 Returns nothing. Throws errors if any validation fails
 */
-void	parse_config(const char *filename, t_vars *vars)
+void	parse_config(const char *filename, t_config *config)
 {
-	int			fd;
-	char		**config_cache;
-	t_textures	textures;
-	(void)vars;
+	int		fd;
+	char	**config_cache;
 
-	textures = (t_textures){};
+	*config = (t_config){};
 	validate_ext(filename, "cub");
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
 		error_handler("Failure to open file", "parse_map", 0);
 	cache_config(fd, &config_cache);
-	set_texture_config(&textures, (const char **)config_cache);
-	validate_texture_config(textures);
-	// check_map(config_cache + TEXTURES_SIZE);
-	// cache_map(&vars->map, config_cache + TEXTURES_SIZE);
+	set_texture_config(&config->textures_config, (const char **)config_cache);
+	validate_texture_config(config->textures_config);
+	// validate_map(config_cache + TEXTURES_SIZE);
+	cache_map(&config->map, config_cache + TEXTURES_SIZE);
+	ft_free2d(config_cache);
 	close(fd);
 }
