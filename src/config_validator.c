@@ -6,7 +6,7 @@
 /*   By: kwang <kwang@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 22:42:46 by kwang             #+#    #+#             */
-/*   Updated: 2022/09/26 23:34:03 by kwang            ###   ########.fr       */
+/*   Updated: 2022/09/27 18:24:47 by kwang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,14 @@ static void validate_texture_rgb(const char *config_str)
 			error_handler("Too few RGB values", "validate_texture_rgb",EIO);
 		if (is_rgb_value(colours[i]) == false)
 			error_handler("Invalid RGB value", "validate_texture_rgb", EIO);
+		if (ft_strlen(colours[i]) > 3)
+			error_handler("RGB value greater than 255", "validate_texture_rgb", EIO);
 		val = ft_atoi(colours[i]);
 		if (val < 0 || val > 255)
 			error_handler("Invalid RGB value", "validate_texture_rgb", EIO);
 		++i;
 	}
+	ft_free2d(colours);
 }
 
 /*
@@ -78,11 +81,14 @@ Returns nothing. Throws errors if any validation fails.
 */
 void	validate_texture_config(const t_textures textures)
 {
-	int	i;
+	size_t	i;
 
-	i = -1;
-	while (++i < 4)
+	i = 0;
+	while (i < 4)
+	{
 		validate_texture_path(textures.textures[i]);
+		++i;
+	}
 	while (i < 6)
 	{
 		validate_texture_rgb(textures.textures[i]);
