@@ -13,15 +13,14 @@ Returns true if all variables have a non-NULL value; false otherwise.
 */
 int check_textures_set(const t_textures textures)
 {
-	size_t	size;
-	int		i;
+	size_t	i;
 
-	size = sizeof(t_textures) / sizeof(char *);
-	i = -1;
-	while (++i < size)
+	i = 0;
+	while (i < TEXTURES_SIZE)
 	{
 		if (textures.textures[i] == NULL)
 			return (false);
+		++i;
 	}
 	return (true);
 }
