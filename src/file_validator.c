@@ -6,7 +6,7 @@
 /*   By: kwang <kwang@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 21:57:16 by kwang             #+#    #+#             */
-/*   Updated: 2022/09/26 22:00:16 by kwang            ###   ########.fr       */
+/*   Updated: 2022/09/27 14:25:46 by kwang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ Return value:
 Returns nothing. Throws errors if extension is no found or does not match the
 extension to match.
 */
-void	check_valid_ext(const char *filename, const char *ext_to_check)
+void	validate_ext(const char *filename, const char *ext_to_check)
 {
 	size_t	ext_len;
 	size_t	check_len;
