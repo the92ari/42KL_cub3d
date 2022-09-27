@@ -6,7 +6,7 @@
 /*   By: kwang <kwang@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 21:57:22 by kwang             #+#    #+#             */
-/*   Updated: 2022/09/26 23:28:11 by kwang            ###   ########.fr       */
+/*   Updated: 2022/09/27 22:28:08 by kwang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,23 +31,24 @@ static void set_config(t_textures* textures, const char *str)
 {
 	char		**split;
 	const char	*arr[6] = {"NO", "SO", "EA", "WE", "F", "C"};
-	int			i;
+	size_t		i;
 	
 	split = ft_split(str, ' ');
 	if (ft_2darrlen(split) != 2)
 		error_handler("Wrong configuration given", "set_config", EIO);
-	i = -1;
-	while (++i < (sizeof(arr) / sizeof(char *)))
+	i = 0;
+	while (i < TEXTURES_SIZE)
 	{
-		if (ft_strcmp(split[0], arr[i]))
+		if (!ft_strcmp(split[0], arr[i]))
 			textures->textures[i] = ft_strdup(split[1]);
+		++i;
 	}
 	ft_free2d(split);
 }
 
 /*
 Parameters:
-textures - Address of t_texture data type of populate with strings from
+textures - Address of t_texture data type of populated with strings from
 			configuration file.
 config_cache - Value of a nested array that was populated with content from
 				config file
@@ -62,16 +63,16 @@ Returns nothing. Throws errors structure fails to be completely populated.
 */
 static void set_texture_config(t_textures *textures, const char **config_cache)
 {
-	size_t		i;
+	size_t	i;
 
 	i = 0;
-	while (!is_str_map(config_cache[i]))
+	while (!is_str_map(config_cache[i]) && (i < TEXTURES_SIZE))
 	{
 		set_config(textures, config_cache[i]);
 		i++;
 	}
 	if (!check_textures_set(*textures))
-		error_handler("Incomplete amount of textures", "set_texture_config", 0);
+		error_handler("Incomplete amount of textures", "set_texture_config", EIO);
 }
 
 /*
@@ -132,17 +133,17 @@ void	parse_config(const char *filename, t_vars *vars)
 	int			fd;
 	char		**config_cache;
 	t_textures	textures;
+	(void)vars;
 
 	textures = (t_textures){};
-	check_ext(filename, "cub");
+	validate_ext(filename, "cub");
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
 		error_handler("Failure to open file", "parse_map", 0);
 	cache_config(fd, &config_cache);
-	set_texture_config(&textures, config_cache);
+	set_texture_config(&textures, (const char **)config_cache);
 	validate_texture_config(textures);
-	// cache_textures(&vars->texture_cache, textures);
-	// cache_map(&vars->map);
-	// check_map(&vars->map);
+	// check_map(config_cache + TEXTURES_SIZE);
+	// cache_map(&vars->map, config_cache + TEXTURES_SIZE);
 	close(fd);
 }
