@@ -6,7 +6,7 @@
 /*   By: kwang <kwang@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 21:57:25 by kwang             #+#    #+#             */
-/*   Updated: 2022/09/27 22:43:05 by kwang            ###   ########.fr       */
+/*   Updated: 2022/09/28 00:42:34 by kwang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,5 @@ int main(int argc, char **argv){
 	}
 	parse_config(argv[1], &config);
 
-	return EXIT_SUCCESS;
+	return (EXIT_SUCCESS);
 }
