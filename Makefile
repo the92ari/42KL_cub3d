@@ -6,14 +6,14 @@
 #    By: kwang <kwang@student.42kl.edu.my>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/26 17:03:19 by kwang             #+#    #+#              #
-#    Updated: 2022/09/27 22:05:44 by kwang            ###   ########.fr        #
+#    Updated: 2022/09/28 13:47:04 by kwang            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRCS =	src/main.c \
 		src/error_handler.c \
 		src/file_validator.c \
-		src/config_validator.c \
+		src/textures_validator.c \
 		src/config_parsing_utils.c \
 		src/config_parser.c
 
