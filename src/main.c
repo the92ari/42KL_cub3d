@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: kwang <kwang@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/23 21:57:25 by kwang             #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/09/28 16:28:23 by kwang            ###   ########.fr       */
-=======
-/*   Updated: 2022/09/28 16:10:28 by wwan-taj         ###   ########.fr       */
->>>>>>> da3558d96160fcf65920efb6deb7ca70b824fc3d
+/*   Created: 2022/09/28 16:30:08 by kwang             #+#    #+#             */
+/*   Updated: 2022/09/28 16:30:28 by kwang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +25,3 @@ int main(int argc, char **argv)
 
 	return (EXIT_SUCCESS);
 }
-
-// BLAHBLAH
