@@ -81,5 +81,7 @@ int		check_textures_set(const t_textures textures);
 int		is_str_empty(const char* str);
 int		is_str_map(const char *str);
 
+// mlx_hook_functions.c
+int	exit_program_mlx(t_vars* mlx)
 
 #endif

@@ -6,7 +6,7 @@
 #    By: kwang <kwang@student.42kl.edu.my>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/26 17:03:19 by kwang             #+#    #+#              #
-#    Updated: 2022/09/25 22:57:14 by kwang            ###   ########.fr        #
+#    Updated: 2022/09/28 14:48:12 by kwang            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,8 @@ SRCS =	src/main.c \
 		src/error_handler \
 		src/file_validator \
 		src/config_handler \
+		src/mlx_handler \
+		src/mlx_hook_functions.c
 
 OBJS = $(SRCS:.c=.o)
 
