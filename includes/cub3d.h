@@ -92,7 +92,11 @@ int		is_str_empty(const char* str);
 int		is_str_map(const char *str);
 int		is_rgb_value(const char *str);
 
+// mlx_handler.c
+void	handle_mlx(t_config *config);
+
 // mlx_hook_functions.c
-int	exit_program_mlx(t_vars* mlx);
+int		exit_program_mlx(t_vars* mlx);
+
 
 #endif
