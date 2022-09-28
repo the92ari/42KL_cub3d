@@ -6,11 +6,12 @@
 /*   By: kwang <kwang@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 21:57:22 by kwang             #+#    #+#             */
-/*   Updated: 2022/09/26 22:27:10 by kwang            ###   ########.fr       */
+/*   Updated: 2022/09/28 15:40:27 by kwang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+#include <string.h>
 
 /*
 Parameters:
@@ -31,23 +32,24 @@ static void set_config(t_textures* textures, const char *str)
 {
 	char		**split;
 	const char	*arr[6] = {"NO", "SO", "EA", "WE", "F", "C"};
-	int			i;
+	size_t		i;
 	
 	split = ft_split(str, ' ');
 	if (ft_2darrlen(split) != 2)
 		error_handler("Wrong configuration given", "set_config", EIO);
-	i = -1;
-	while (++i < (sizeof(arr) / sizeof(char *)))
+	i = 0;
+	while (i < TEXTURES_SIZE)
 	{
-		if (ft_strcmp(split[0], arr[i]))
+		if (!ft_strcmp(split[0], arr[i]))
 			textures->textures[i] = ft_strdup(split[1]);
+		++i;
 	}
 	ft_free2d(split);
 }
 
 /*
 Parameters:
-textures - Address of t_texture data type of populate with strings from
+textures - Address of t_texture data type of populated with strings from
 			configuration file.
 config_cache - Value of a nested array that was populated with content from
 				config file
@@ -60,18 +62,18 @@ function call.
 Return value:
 Returns nothing. Throws errors structure fails to be completely populated.
 */
-static void check_set_config(t_textures	*textures, const char **config_cache)
+static void set_texture_config(t_textures *textures, const char **config_cache)
 {
-	size_t		i;
+	size_t	i;
 
 	i = 0;
-	while (!is_str_map(config_cache[i]))
+	while (!is_str_map(config_cache[i]) && (i < TEXTURES_SIZE))
 	{
 		set_config(textures, config_cache[i]);
 		i++;
 	}
 	if (!check_textures_set(*textures))
-		error_handler("Incomplete amount of textures", "check_set_config", 0);
+		error_handler("Incomplete amount of textures", "set_texture_config", EIO);
 }
 
 /*
@@ -116,6 +118,32 @@ static void	cache_config(int fd, char ***config_cache)
 
 /*
 Parameters:
+map - address of map variable to be used by game logic
+map_config - address map config obtained from config file
+
+Description:
+Takes a pointer to a nested array of a map and duplicates it into a map
+variable to be used by game logic.
+
+Return value:
+Returns nothing.
+*/
+static void	cache_map(char ***map, char **map_config)
+{
+	size_t	i;
+
+	i = 0;
+	*map = malloc(sizeof(char *) * (ft_2darrlen(map_config) + 1));
+	while (map_config[i] != NULL)
+	{
+		(*map)[i] = strdup(map_config[i]);
+		++i;
+	}
+	(*map)[i] = NULL;
+}
+
+/*
+Parameters:
 filename - string that represent config file in .cub extension
 vars - address of custom data structure that holds essential program data
 
@@ -127,22 +155,21 @@ data structure.
 Return value:
 Returns nothing. Throws errors if any validation fails
 */
-void	parse_config(const char *filename, t_vars *vars)
+void	parse_config(const char *filename, t_config *config)
 {
-	int			fd;
-	char		**config_cache;
-	t_textures	textures;
+	int		fd;
+	char	**config_cache;
 
-	textures = (t_textures){};
-	check_ext(filename, "cub");
+	*config = (t_config){};
+	validate_ext(filename, "cub");
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
 		error_handler("Failure to open file", "parse_map", 0);
 	cache_config(fd, &config_cache);
-	check_set_config(&textures, config_cache);
-	// validate_config
-	// cache_textures(&vars->texture_cache, &config_cache);
-	// cache_map(&vars->map);
-	// check_map(&vars->map);
+	set_texture_config(&config->textures_config, (const char **)config_cache);
+	validate_texture_config(config->textures_config);
+	// validate_map(config_cache + TEXTURES_SIZE);
+	cache_map(&config->map, config_cache + TEXTURES_SIZE);
+	ft_free2d(config_cache);
 	close(fd);
 }

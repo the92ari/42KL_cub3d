@@ -6,22 +6,25 @@
 #    By: kwang <kwang@student.42kl.edu.my>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/26 17:03:19 by kwang             #+#    #+#              #
-#    Updated: 2022/09/28 14:48:12 by kwang            ###   ########.fr        #
+#    Updated: 2022/09/28 15:55:39 by kwang            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRCS =	src/main.c \
-		src/error_handler \
-		src/file_validator \
-		src/config_handler \
-		src/mlx_handler \
+		src/error_handler.c \
+		src/file_validator.c \
+		src/textures_validator.c \
+		src/config_parsing_utils.c \
+		src/config_parser.c \
+		src/mlx_handler.c \
 		src/mlx_hook_functions.c
 
 OBJS = $(SRCS:.c=.o)
 
 CC = gcc
 
-CFLAGS = -Wall -Wextra -Werror -I$(INCLUDES) -I/usr/include/ -Imlx_linux -O3
+# CFLAGS = -Wall -Wextra -Werror -I$(INCLUDES) -I/usr/include/ -Imlx_linux -O3
+CFLAGS = -I$(INCLUDES) -I/usr/include/ -Imlx_linux -O3
 
 MLXFLAGS = -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
 
@@ -38,13 +41,9 @@ NAME = cub3d
 all : $(NAME)
 
 $(LIBFT) :
-	@git submodule init
-	@git submodule update
 	@make -C $(LIBFTDIR) all
 
 $(MLX) :
-	@git submodule init
-	@git submodule update
 	@make -C mlx_linux
 
 $(NAME) : $(OBJS) $(INCLUDES)/$(NAME).h $(LIBFT) $(MLX)
@@ -56,7 +55,7 @@ bonus : ${NAME}
 
 clean :
 	@echo "Cleaning all .o files.."
-	@make -C mlx_linux clean
+	# @make -C mlx_linux clean
 	@make -C $(LIBFTDIR) clean
 	@rm -f $(OBJS)
 

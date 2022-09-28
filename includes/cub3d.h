@@ -5,9 +5,14 @@
 # include <errno.h>
 # include <stdlib.h>
 # include <stdbool.h>
+# include <sys/types.h>
+# include <sys/stat.h>
 # include <fcntl.h>
 # include <math.h>
+# include "mlx.h"
 # include "../libft/libft.h"
+
+# define TEXTURES_SIZE sizeof(t_textures)/sizeof(char *)
 
 enum {
 	NORTH_TEXTURE,
@@ -32,12 +37,6 @@ typedef union u_textures
 	char *textures[6];
 }	t_textures;
 
-// union colors
-// {
-// 	int		color;
-// 	char	*rgb_string;
-// };
-
 typedef struct s_data
 {
 	void	*addr;
@@ -59,6 +58,12 @@ typedef struct s_cache
 	int		ceiling;
 }	t_cache;
 
+typedef struct s_config
+{
+	t_textures	textures_config;
+	char		**map;
+}	t_config;
+
 typedef struct s_vars
 {
 	void	*mlx;
@@ -73,15 +78,21 @@ typedef struct s_vars
 void	error_handler(const char *msg, const char *func, int err_no);
 
 // file_validator.c
-void	check_valid_ext(const char *filename, const char *ext_to_check);
-void	parse_config(const char *filename, t_vars *vars);
+void	validate_ext(const char *filename, const char *ext_to_check);
 
 // config_parser.c
+void	parse_config(const char *filename, t_config *config);
+
+// config_validator.c
+void	validate_texture_config(t_textures textures);
+
+// config_parsing_utils.c
 int		check_textures_set(const t_textures textures);
 int		is_str_empty(const char* str);
 int		is_str_map(const char *str);
+int		is_rgb_value(const char *str);
 
 // mlx_hook_functions.c
-int	exit_program_mlx(t_vars* mlx)
+int	exit_program_mlx(t_vars* mlx);
 
 #endif
