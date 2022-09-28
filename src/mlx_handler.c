@@ -6,7 +6,7 @@
 /*   By: kwang <kwang@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 14:10:54 by kwang             #+#    #+#             */
-/*   Updated: 2022/09/28 16:07:08 by kwang            ###   ########.fr       */
+/*   Updated: 2022/09/28 16:42:44 by kwang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	handle_mlx(t_config *config)
 	mlx.mlx = mlx_init();
 	if (!mlx.mlx)
 		error_handler("Display var not configured", "main", EIO);
+	mlx_get_screen_size(mlx.mlx, &mlx.win_width, &mlx.win_height);
 	mlx.win = mlx_new_window(mlx.mlx, mlx.win_width, mlx.win_height, "Cub3d");
 	mlx_hook(mlx.win, 17, 0, exit_program_mlx, &mlx);
 	mlx_loop(mlx.mlx);
