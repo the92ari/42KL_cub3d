@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: kwang <kwang@student.42kl.edu.my>          +#+  +:+       +#+         #
+#    By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/26 17:03:19 by kwang             #+#    #+#              #
-#    Updated: 2022/09/28 15:55:39 by kwang            ###   ########.fr        #
+#    Updated: 2022/09/28 23:55:38 by wwan-taj         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,7 @@ SRCS =	src/main.c \
 		src/textures_validator.c \
 		src/config_parsing_utils.c \
 		src/config_parser.c \
+		src/map_validator.c \
 		src/mlx_handler.c \
 		src/mlx_hook_functions.c
 

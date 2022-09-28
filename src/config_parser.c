@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   config_parser.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kwang <kwang@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 21:57:22 by kwang             #+#    #+#             */
-/*   Updated: 2022/09/28 15:40:27 by kwang            ###   ########.fr       */
+/*   Updated: 2022/09/29 00:45:09 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,8 +167,8 @@ void	parse_config(const char *filename, t_config *config)
 		error_handler("Failure to open file", "parse_map", 0);
 	cache_config(fd, &config_cache);
 	set_texture_config(&config->textures_config, (const char **)config_cache);
-	validate_texture_config(config->textures_config);
-	// validate_map(config_cache + TEXTURES_SIZE);
+	// validate_texture_config(config->textures_config);
+	validate_map(config_cache + TEXTURES_SIZE);
 	cache_map(&config->map, config_cache + TEXTURES_SIZE);
 	ft_free2d(config_cache);
 	close(fd);
