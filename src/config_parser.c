@@ -6,7 +6,7 @@
 /*   By: kwang <kwang@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 21:57:22 by kwang             #+#    #+#             */
-/*   Updated: 2022/09/28 00:35:21 by kwang            ###   ########.fr       */
+/*   Updated: 2022/09/28 12:33:38 by kwang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,6 @@ static void	cache_map(char ***map, char **map_config)
 	*map = malloc(sizeof(char *) * (ft_2darrlen(map_config) + 1));
 	while (map_config[i] != NULL)
 	{
-		printf("%s\n", map_config[i]);
 		(*map)[i] = strdup(map_config[i]);
 		++i;
 	}
