@@ -86,6 +86,9 @@ void	parse_config(const char *filename, t_config *config);
 // config_validator.c
 void	validate_texture_config(t_textures textures);
 
+// map_validator.c
+void	validate_map(char **config_cache);
+
 // config_parsing_utils.c
 int		check_textures_set(const t_textures textures);
 int		is_str_empty(const char* str);
