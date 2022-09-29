@@ -1,6 +1,16 @@
 #include "cub3d.h"
 
 /*
+Just temporary function to be used for debugging purposes. Prints the 2D array
+without newlines
+*/
+static	void print_2d(char **array)
+{
+	for (int i = 0; i < ft_2darrlen(array); i++)
+		printf("%s", array[i]);
+}
+
+/*
 Parameters:
 c - the character that is to be checked. The character is a character
 that is adjacent to a space character in the map
@@ -103,14 +113,27 @@ int	check_space_validity(char **config_cache)
 	return (1);
 }
 
-int		get_longest_line(char **config_cache)
+/*
+Parameters:
+config_cache - The 2D map array stored in the stack
+
+Description:
+The continuously iterates through each line in the 2D array
+and find the longest line.
+
+Return value:
+Returns the length of the longest line.
+*/
+static int		get_longest_line(char **config_cache)
 {
 	int	max;
 	int	i;
+	int	arrlen;
 
 	i = 0;
 	max = 0;
-	while (i < ft_2darrlen(config_cache))
+	arrlen = ft_2darrlen(config_cache);
+	while (i < arrlen)
 	{
 		if (ft_strlen(config_cache[i]) > max)
 			max = ft_strlen(config_cache[i]);
@@ -119,6 +142,21 @@ int		get_longest_line(char **config_cache)
 	return (max);
 }
 
+/*
+Parameters:
+temp_arr - An empty 2D array
+arrlen - The length of temp_arr
+size - Size of the array that is going to be filled up with spaces
+
+Description:
+This function will take in an empty 2D array and memory allocate
+each character pointer by the size of 'size + 2'. It will be terminated
+with a newline character followed by nul terminator.
+The remaining bytes will be filled with the space character
+
+Return value:
+Does not return anything
+*/
 static void	fill_space(char **temp_arr, int arrlen, int size)
 {
 	int i;
@@ -134,29 +172,50 @@ static void	fill_space(char **temp_arr, int arrlen, int size)
 	}
 }
 
-static void	copy_characters(char *dst, const char *src)
-{
-	size_t i;
+/*
+Parameters:
+dst - The destination 2D array
+src - The source 2D array
 
-	i = 0;
-	while (src[i] != '\0')
-	{
-		dst[i] = src[i];
-		i++;
-	}
-}
+Description:
+It will copy all characters from src into dst string by string.
+It will not nul terminate the string afterit finishes copying.
 
+Return value:
+Does not return anything
+*/
 static void copy_into_temp(char **dst, char **src)
 {
-	int i = 0;
+	size_t	i;
+	size_t	j;
+	int		arrlen;
 
-	while (i < ft_2darrlen(src))
+	arrlen = ft_2darrlen(src);
+	i = 0;
+	while (i < arrlen)
 	{
-		copy_characters(dst[i], src[i]);
+		j = 0;
+		while (src[i][j] != '\0')
+		{
+			dst[i][j] = src[i][j];
+			j++;
+		}
 		i++;
 	}
 }
 
+/*
+Parameters:
+temp_arr - The temporary array that has the copy of the map padded with spaces
+arrlen - the length of temp_arr
+
+Description:
+It will check the topmost and bottommost row for invalid characters.
+Invalid characters are anything aside from '1' and ' '
+
+Return value:
+Returns 0 if it encounters an invalid character. Returns 1 otherwise.
+*/
 static int	chk_top_and_bot(char **temp_arr, int arrlen)
 {
 	size_t	i;
@@ -178,6 +237,18 @@ static int	chk_top_and_bot(char **temp_arr, int arrlen)
 	return (1);
 }
 
+/*
+Parameters:
+temp_arr - The temporary array that has the copy of the map padded with spaces
+longest - the length of each string
+
+Description:
+It will check the leftmost and rightmost column for invalid characters.
+Invalid characters are anything aside from '1' and ' '
+
+Return value:
+Returns 0 if it encounters an invalid character. Returns 1 otherwise.
+*/
 static int	chk_left_and_right(char **temp_arr, int longest)
 {
 	size_t	i;
@@ -199,12 +270,20 @@ static int	chk_left_and_right(char **temp_arr, int longest)
 	return (1);
 }
 
-static	void print_2d(char **array)
-{
-	for (int i = 0; i < ft_2darrlen(array); i++)
-		printf("%s", array[i]);
-}
 
+/*
+Parameters:
+temp_arr - the malloc 2D array that was copied from config_cache
+longest - the longest string in the 2D array.
+
+Description:
+It will call two functions to check for invalid characters.
+First function is to check the top and bottom border.
+Second function is to check the left-most and right-most border.
+
+Return values:
+Returns 0 if an invalid character is found. Returns 1 otherwise.
+*/
 int		check_enclosed(char **temp_arr, int longest)
 {
 	if (chk_top_and_bot(temp_arr, ft_2darrlen(temp_arr)) == 0)
@@ -214,6 +293,20 @@ int		check_enclosed(char **temp_arr, int longest)
 	return (1);
 }
 
+
+/*
+Parameters:
+config_cache - The 2D configuration array stored in the stack
+
+Description:
+The function will duplicate the map in a 2D array that is padded with spaces.
+It will check for any invalid characters along the rectangular border.
+It will then also check if there's any space character that is not at the edges
+and will check the surround 8 elements for any invalid characters.
+
+Return value:
+Does not return anything
+*/
 void	validate_map(char **config_cache)
 {
 	char	**temp_arr;
