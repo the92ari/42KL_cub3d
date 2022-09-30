@@ -27,13 +27,13 @@ assigns to only one texture.
 Return value:
 Returns nothing. Throws errors configuration is invalid.
 */
-static void set_config(t_assets* assets, const char *str)
+static void	set_config(t_assets *assets, const char *str)
 {
 	char		**split;
 	const char	*textures[4] = {"NO", "SO", "EA", "WE"};
 	const char	*colours[2] = {"F", "C"};
 	size_t		i;
-	
+
 	split = ft_split(str, ' ');
 	if (ft_2darrlen(split) != 2)
 		error_handler("Wrong configuration given", "set_config", EIO);
@@ -69,18 +69,18 @@ function call.
 Return value:
 Returns nothing. Throws errors structure fails to be completely populated.
 */
-static void set_assets_config(t_assets *assets, const char **config_cache)
+static void	set_assets_config(t_assets *assets, const char **config_cache)
 {
 	size_t	i;
 
 	i = 0;
-	while (!is_str_map(config_cache[i]) && (i < ASSETS_SIZE))
+	while (!is_str_map(config_cache[i]) && (i < (TEXTURES_SIZE + COLOURS_SIZE)))
 	{
 		set_config(assets, config_cache[i]);
 		i++;
 	}
 	if (!check_assets_set(*assets))
-		error_handler("Incomplete amount of textures", "set_assets_config", EIO);
+		error_handler("Incomplete textures amount", "set_assets_config", EIO);
 }
 
 /*
@@ -111,7 +111,7 @@ static void	cache_config(int fd, char ***config_cache)
 		if (is_str_empty(line) == true)
 		{
 			free(line);
-			continue;
+			continue ;
 		}
 		lst = ft_lstnew(line);
 		if (!lst->content)
@@ -179,8 +179,8 @@ void	parse_config(const char *filename, t_config *config)
 	cache_config(fd, &config_cache);
 	set_assets_config(&config->textures, (const char **)config_cache);
 	validate_assets_config(config->textures);
-	// validate_map(config_cache + ASSETS_SIZE);
-	cache_map(&config->map, config_cache + ASSETS_SIZE);
+	validate_map(config_cache + (TEXTURES_SIZE + COLOURS_SIZE));
+	cache_map(&config->map, config_cache + (TEXTURES_SIZE + COLOURS_SIZE));
 	ft_free2d(config_cache);
 	close(fd);
 }

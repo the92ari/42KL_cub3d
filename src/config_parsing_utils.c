@@ -11,7 +11,7 @@ to identify if the current line is empty.
 Return value:
 Returns true if all characters are whitespace characters; false if not.
 */
-int	is_str_empty(const char* str)
+int	is_str_empty(const char *str)
 {
 	int	i;
 
@@ -35,7 +35,7 @@ Iterates through str to check for characters only available to map. i.e.
 Return value:
 Returns true if all characters are characters available to map; false otherwise
 */
-int is_str_map(const char *str)
+int	is_str_map(const char *str)
 {
 	int	i;
 

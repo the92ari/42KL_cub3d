@@ -23,7 +23,7 @@ to NULL;
 Return value:
 Returns true if all variables have a non-NULL value; false otherwise.
 */
-int check_assets_set(const t_assets assets)
+int	check_assets_set(const t_assets assets)
 {
 	size_t	i;
 
