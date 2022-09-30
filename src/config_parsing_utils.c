@@ -2,31 +2,6 @@
 
 /*
 Parameters:
-textures - data structure to be checked if data members are unpopulated.
-
-Description:
-Iterates through t_textures data structure and evaluate is any variable is set
-to NULL; 
-
-Return value:
-Returns true if all variables have a non-NULL value; false otherwise.
-*/
-int check_textures_set(const t_textures textures)
-{
-	size_t	i;
-
-	i = 0;
-	while (i < TEXTURES_SIZE)
-	{
-		if (textures.textures[i] == NULL)
-			return (false);
-		++i;
-	}
-	return (true);
-}
-
-/*
-Parameters:
 str - string to be checked.
 
 Description:

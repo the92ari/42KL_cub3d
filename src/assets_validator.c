@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   textures_validator.c                               :+:      :+:    :+:   */
+/*   assets_validator.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kwang <kwang@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/26 22:42:46 by kwang             #+#    #+#             */
-/*   Updated: 2022/09/28 15:39:26 by kwang            ###   ########.fr       */
+/*   Created: 2022/09/30 14:30:41 by kwang             #+#    #+#             */
+/*   Updated: 2022/09/30 14:34:37 by kwang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ Evaluates if RGB values are in valid format and range.
 Return value:
 Returns nothing. Throws error if rgb values are invalid.
 */
-static void validate_texture_rgb(const char *config_str)
+static void validate_rgb(const char *config_str)
 {
 	char	**colours;
 	size_t	i;
@@ -80,19 +80,20 @@ values are valid.
 Return value:
 Returns nothing. Throws errors if any validation fails.
 */
-void	validate_texture_config(const t_textures textures)
+void	validate_assets_config(const t_assets assets)
 {
 	size_t	i;
 
 	i = 0;
-	while (i < 4)
+	while (i < TEXTURES_SIZE)
 	{
-		validate_texture_path(textures.textures[i]);
+		validate_texture_path(assets.textures[i]);
 		++i;
 	}
-	while (i < 6)
+	i = 0;
+	while (i < COLOURS_SIZE)
 	{
-		validate_texture_rgb(textures.textures[i]);
-		i++;
+		validate_rgb(assets.colours[i]);
+		++i;
 	}
 }

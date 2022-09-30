@@ -6,7 +6,7 @@
 /*   By: kwang <kwang@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 21:57:22 by kwang             #+#    #+#             */
-/*   Updated: 2022/09/28 16:57:05 by kwang            ###   ########.fr       */
+/*   Updated: 2022/09/30 14:32:12 by kwang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,11 @@ assigns to only one texture.
 Return value:
 Returns nothing. Throws errors configuration is invalid.
 */
-static void set_config(t_textures* textures, const char *str)
+static void set_config(t_assets* assets, const char *str)
 {
 	char		**split;
-	const char	*arr[6] = {"NO", "SO", "EA", "WE", "F", "C"};
+	const char	*textures[4] = {"NO", "SO", "EA", "WE"};
+	const char	*colours[2] = {"F", "C"};
 	size_t		i;
 	
 	split = ft_split(str, ' ');
@@ -39,8 +40,15 @@ static void set_config(t_textures* textures, const char *str)
 	i = 0;
 	while (i < TEXTURES_SIZE)
 	{
-		if (!ft_strcmp(split[0], arr[i]))
-			textures->textures[i] = ft_strdup(split[1]);
+		if (!ft_strcmp(split[0], textures[i]))
+			assets->textures[i] = ft_strdup(split[1]);
+		++i;
+	}
+	i = 0;
+	while (i < COLOURS_SIZE)
+	{
+		if (!ft_strcmp(split[0], colours[i]))
+			assets->colours[i] = ft_strdup(split[1]);
 		++i;
 	}
 	ft_free2d(split);
@@ -61,18 +69,18 @@ function call.
 Return value:
 Returns nothing. Throws errors structure fails to be completely populated.
 */
-static void set_texture_config(t_textures *textures, const char **config_cache)
+static void set_assets_config(t_assets *assets, const char **config_cache)
 {
 	size_t	i;
 
 	i = 0;
-	while (!is_str_map(config_cache[i]) && (i < TEXTURES_SIZE))
+	while (!is_str_map(config_cache[i]) && (i < ASSETS_SIZE))
 	{
-		set_config(textures, config_cache[i]);
+		set_config(assets, config_cache[i]);
 		i++;
 	}
-	if (!check_textures_set(*textures))
-		error_handler("Incomplete amount of textures", "set_texture_config", EIO);
+	if (!check_assets_set(*assets))
+		error_handler("Incomplete amount of textures", "set_assets_config", EIO);
 }
 
 /*
@@ -169,10 +177,10 @@ void	parse_config(const char *filename, t_config *config)
 	if (fd == -1)
 		error_handler("Failure to open file", "parse_map", 0);
 	cache_config(fd, &config_cache);
-	set_texture_config(&config->textures_config, (const char **)config_cache);
-	validate_texture_config(config->textures_config);
-	// validate_map(config_cache + TEXTURES_SIZE);
-	cache_map(&config->map, config_cache + TEXTURES_SIZE);
+	set_assets_config(&config->textures, (const char **)config_cache);
+	validate_assets_config(config->textures);
+	// validate_map(config_cache + ASSETS_SIZE);
+	cache_map(&config->map, config_cache + ASSETS_SIZE);
 	ft_free2d(config_cache);
 	close(fd);
 }

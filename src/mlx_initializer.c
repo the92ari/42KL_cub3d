@@ -1,28 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   mlx_initializer.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kwang <kwang@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/28 16:30:08 by kwang             #+#    #+#             */
-/*   Updated: 2022/09/30 14:33:52 by kwang            ###   ########.fr       */
+/*   Created: 2022/09/28 16:40:08 by kwang             #+#    #+#             */
+/*   Updated: 2022/09/30 14:38:21 by kwang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int main(int argc, char **argv)
+void	init_textures_mlx(void *p_mlx, t_cache *texture_cache, t_config *config)
 {
-	t_config config;
+	size_t	i;
 
-	if (argc != 2)
+	i = 0;
+	while (i < 4)
 	{
-		printf("Usage: %s [<MAP_NAME>.cub]\n", argv[0]);
-		return (EXIT_FAILURE);
+		// cache_image(p_mlx, texture_cache + i, config->textures.textures[i]);
+		++i;
 	}
-	parse_config(argv[1], &config);
-	// handle_mlx(&config);
-
-	return (EXIT_SUCCESS);
 }

@@ -6,18 +6,21 @@
 #    By: kwang <kwang@student.42kl.edu.my>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/26 17:03:19 by kwang             #+#    #+#              #
-#    Updated: 2022/09/28 15:55:39 by kwang            ###   ########.fr        #
+#    Updated: 2022/09/30 14:33:26 by kwang            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRCS =	src/main.c \
 		src/error_handler.c \
 		src/file_validator.c \
-		src/textures_validator.c \
+		src/assets_validator.c \
 		src/config_parsing_utils.c \
 		src/config_parser.c \
 		src/mlx_handler.c \
-		src/mlx_hook_functions.c
+		src/mlx_hook_functions.c \
+		src/mlx_initializer.c \
+		src/config_parser_helper.c \
+		src/image_utils.c
 
 OBJS = $(SRCS:.c=.o)
 

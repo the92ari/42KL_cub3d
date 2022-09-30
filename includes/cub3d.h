@@ -12,30 +12,27 @@
 # include "mlx.h"
 # include "../libft/libft.h"
 
-# define TEXTURES_SIZE sizeof(t_textures)/sizeof(char *)
+# define ASSETS_SIZE (TEXTURES_SIZE + COLOURS_SIZE)
 
-enum {
-	NORTH_TEXTURE,
-	SOUTH_TEXTURE,
-	EAST_TEXTURE,
-	WEST_TEXTURE,
-	FLOOR,
-	CEILING
+enum e_textures{
+	NORTH,
+	SOUTH,
+	EAST,
+	WEST,
+	TEXTURES_SIZE
 };
 
-typedef union u_textures
+enum e_colours{
+	FLOOR,
+	CEILING,
+	COLOURS_SIZE
+};
+
+typedef struct s_assets
 {
-	struct s_textures
-	{
-		char *north;
-		char *south;
-		char *east;
-		char *west;
-		char *floor;
-		char *ceiling;
-	} container;
-	char *textures[6];
-}	t_textures;
+	char	*textures[TEXTURES_SIZE];
+	char	*colours[COLOURS_SIZE];
+}	t_assets;
 
 typedef struct s_data
 {
@@ -60,7 +57,7 @@ typedef struct s_cache
 
 typedef struct s_config
 {
-	t_textures	textures_config;
+	t_assets	textures;
 	char		**map;
 }	t_config;
 
@@ -83,11 +80,13 @@ void	validate_ext(const char *filename, const char *ext_to_check);
 // config_parser.c
 void	parse_config(const char *filename, t_config *config);
 
-// config_validator.c
-void	validate_texture_config(t_textures textures);
+// assets_validator.c
+void	validate_assets_config(const t_assets assets);
+
+// config_parser_helper.c
+int		check_assets_set(const t_assets assets);
 
 // config_parsing_utils.c
-int		check_textures_set(const t_textures textures);
 int		is_str_empty(const char* str);
 int		is_str_map(const char *str);
 int		is_rgb_value(const char *str);
@@ -98,5 +97,7 @@ void	handle_mlx(t_config *config);
 // mlx_hook_functions.c
 int		exit_program_mlx(t_vars* mlx);
 
+// image_utils.c
+void	cache_image(void *mlx, t_data *img, char *path);
 
 #endif
