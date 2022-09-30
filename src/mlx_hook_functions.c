@@ -12,7 +12,7 @@
 
 #include "cub3d.h"
 
-int	exit_program_mlx(t_vars* mlx)
+int	exit_program_mlx(t_vars *mlx)
 {
 	mlx_destroy_window(mlx->mlx, mlx->win);
 	exit(0);

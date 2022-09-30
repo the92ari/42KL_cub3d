@@ -12,10 +12,11 @@
 
 #include "cub3d.h"
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
-	t_config config;
+	t_config	config;
 
+	errno = 0;
 	if (argc != 2)
 	{
 		printf("Usage: %s [<MAP_NAME>.cub]\n", argv[0]);
@@ -23,6 +24,5 @@ int main(int argc, char **argv)
 	}
 	parse_config(argv[1], &config);
 	// handle_mlx(&config);
-
 	return (EXIT_SUCCESS);
 }

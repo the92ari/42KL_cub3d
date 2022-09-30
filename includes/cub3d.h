@@ -12,8 +12,6 @@
 # include "mlx.h"
 # include "../libft/libft.h"
 
-# define ASSETS_SIZE (TEXTURES_SIZE + COLOURS_SIZE)
-
 enum e_textures{
 	NORTH,
 	SOUTH,
@@ -87,15 +85,22 @@ void	validate_assets_config(const t_assets assets);
 int		check_assets_set(const t_assets assets);
 
 // config_parsing_utils.c
-int		is_str_empty(const char* str);
+int		is_str_empty(const char *str);
 int		is_str_map(const char *str);
 int		is_rgb_value(const char *str);
+
+// map_validator_utils.c
+void	fill_space(char **temp_arr, int arrlen, int size);
+void	copy_into_temp(char **dst, char **src, int len);
+
+// map_validator.c
+void	validate_map(char **config_cache);
 
 // mlx_handler.c
 void	handle_mlx(t_config *config);
 
 // mlx_hook_functions.c
-int		exit_program_mlx(t_vars* mlx);
+int		exit_program_mlx(t_vars *mlx);
 
 // image_utils.c
 void	cache_image(void *mlx, t_data *img, char *path);
