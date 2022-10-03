@@ -12,6 +12,9 @@
 # include "mlx.h"
 # include "../libft/libft.h"
 
+# define WIN_WIDTH 1600
+# define WIN_HEIGHT 900
+
 enum e_textures{
 	NORTH,
 	SOUTH,
