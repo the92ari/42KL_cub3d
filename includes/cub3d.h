@@ -49,9 +49,13 @@ typedef struct s_cache
 	t_data	south;
 	t_data	east;
 	t_data	west;
+}	t_cache;
+
+typedef struct s_colours
+{
 	int		floor;
 	int		ceiling;
-}	t_cache;
+}	t_colours;
 
 typedef struct s_config
 {
@@ -61,12 +65,13 @@ typedef struct s_config
 
 typedef struct s_vars
 {
-	void	*mlx;
-	void	*win;
-	int		win_width;
-	int		win_height;
-	t_cache	texture_cache;
-	char	**map;
+	void		*mlx;
+	void		*win;
+	int			win_width;
+	int			win_height;
+	t_cache		texture_cache;
+	t_colours	colours;
+	char		**map;
 }	t_vars;
 
 // error_handler.c
