@@ -6,7 +6,7 @@
 #    By: kwang <kwang@student.42kl.edu.my>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/26 17:03:19 by kwang             #+#    #+#              #
-#    Updated: 2022/10/03 16:26:24 by kwang            ###   ########.fr        #
+#    Updated: 2022/10/03 16:47:56 by kwang            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,17 +33,21 @@ CC = gcc
 # CFLAGS = -Wall -Wextra -Werror -I$(INCLUDES) -I/usr/include/ -Imlx_linux -O3
 CFLAGS = -I$(INCLUDES) -I/usr/include/
 
-UNAME_S := $(shell uname -s)
-    ifeq ($(UNAME_S),Linux)
-        CFLAGS += -Imlx_linux
-    endif
-    ifeq ($(UNAME_S),Darwin)
-        CFLAGS += -Imlx
-    endif
-
 LINUXMLXFLAGS = -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
 
 MACMLXFLAGS = -lmlx -framework OpenGL -framework AppKit
+
+MLXFLAGS :=
+
+UNAME_S := $(shell uname -s)
+    ifeq ($(UNAME_S),Linux)
+        CFLAGS += -Imlx_linux
+		MLXFLAGS += $(LINUXMLXFLAGS)
+    endif
+    ifeq ($(UNAME_S),Darwin)
+        CFLAGS += -Imlx
+		MLXFLAGS += $(MACMLXFLAGS)
+    endif
 
 INCLUDES = includes
 
@@ -51,20 +55,17 @@ LIBFTDIR = libft
 
 LIBFT = $(LIBFTDIR)/libft.a
 
-LIBFTFLAGS = -Llibft -lft
+LIBFTFLAGS = -L$(LIBFTDIR) -lft -I$(LIBFTDIR)
 
 MLX = mlx_linux/libmlx_Linux.a
 
-NAMELINUX = cub3dlinux
+# NAMELINUX = cub3dlinux
 
 NAME = cub3d
 
 all : $(NAME)
 
-linux:	$(NAMELINUX)
-
-# $(OBJSMAC): 	$(SRCS)
-# 				$(CC) -Wall -Wextra -Werror -Imlx -c $< -o $@ 
+# linux:	$(NAMELINUX)
 
 $(LIBFT) :
 	@make -C $(LIBFTDIR) all
@@ -72,15 +73,20 @@ $(LIBFT) :
 $(MLX) :
 	@make -C mlx_linux
 
-$(NAMELINUX) : 	$(OBJS) $(INCLUDES)/$(NAME).h $(LIBFT) $(MLX)
-				@echo "Creating $(NAMELINUX).."
-				@echo "Your display variable is $$DISPLAY"
-				@$(CC) $(CFLAGS) -o $@ $^ $(LINUXMLXFLAGS)
+# $(NAMELINUX) : 	$(OBJS) $(INCLUDES)/$(NAME).h $(LIBFT) $(MLX)
+# 				@echo "Creating $(NAMELINUX).."
+# 				@echo "Your display variable is $$DISPLAY"
+# 				@$(CC) $(CFLAGS) -o $@ $^ $(LINUXMLXFLAGS)
+
+# $(NAME):		$(OBJS) $(INCLUDES)/$(NAME).h $(LIBFT)
+# 				@echo "Creating $(NAME).."
+# 				@echo "Your display variable is $$DISPLAY"
+# 				$(CC) $(LIBFTFLAGS) $(MACMLXFLAGS) $(OBJS) -o $(NAME)
 
 $(NAME):		$(OBJS) $(INCLUDES)/$(NAME).h $(LIBFT)
 				@echo "Creating $(NAME).."
 				@echo "Your display variable is $$DISPLAY"
-				$(CC) $(LIBFTFLAGS) $(MACMLXFLAGS) $(OBJS) -o $(NAME)
+				$(CC) $(CFLAGS) $^ -o $@ $(LIBFTFLAGS) $(MLXFLAGS) 
 
 bonus : ${NAME}
 
