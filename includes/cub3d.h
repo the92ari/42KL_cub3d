@@ -70,8 +70,6 @@ typedef struct s_vars
 {
 	void		*mlx;
 	void		*win;
-	int			win_width;
-	int			win_height;
 	t_cache		texture_cache;
 	t_colours	colours;
 	char		**map;
