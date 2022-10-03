@@ -28,7 +28,17 @@ static int	get_longest_line(char **config_cache)
 }
 
 /*
+Parameters:
+map - The padded 2D array of the map
+x - x coordinate of the character to be checked
+y - y coordinate of the character to be checked
 
+Description:
+Recursively calls itself in 8 directions to check if each character is a
+valid character.
+
+Return value:
+Returns true if valid, false otherwise.
 */
 static int	check_enclosed(char **map, int x, int y)
 {
@@ -61,7 +71,7 @@ Loops through `map` and executes the check_enclosed function upon finding
 a '0' character
 
 Return value:
-Returns 1 upon success
+Returns true if valid, false otherwise.
 */
 static int	check_map(char **map)
 {
@@ -94,6 +104,14 @@ static int	check_map(char **map)
 }
 
 /*
+Parameters:
+config_cache - Map section of the cached config.
+
+Description:
+Constructs a temporary rectangular map padded with spaces to validate.
+
+Return value:
+Returns nothing.
 */
 void	validate_map(char **config_cache)
 {

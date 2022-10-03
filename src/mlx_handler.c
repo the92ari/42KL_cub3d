@@ -6,12 +6,22 @@
 /*   By: kwang <kwang@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 14:10:54 by kwang             #+#    #+#             */
-/*   Updated: 2022/10/03 17:25:24 by kwang            ###   ########.fr       */
+/*   Updated: 2022/10/03 19:56:04 by kwang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+/*
+Parameters:
+config - Address of config structure returned after parsing and validation
+
+Description:
+Handles all mlx relation functions.
+
+Return value:
+Returns nothing.
+*/
 void	handle_mlx(t_config *config)
 {
 	t_vars	mlx;
