@@ -6,7 +6,7 @@
 #    By: kwang <kwang@student.42kl.edu.my>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/26 17:03:19 by kwang             #+#    #+#              #
-#    Updated: 2022/10/03 16:47:56 by kwang            ###   ########.fr        #
+#    Updated: 2022/10/03 17:30:27 by kwang            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,29 +59,15 @@ LIBFTFLAGS = -L$(LIBFTDIR) -lft -I$(LIBFTDIR)
 
 MLX = mlx_linux/libmlx_Linux.a
 
-# NAMELINUX = cub3dlinux
-
 NAME = cub3d
 
 all : $(NAME)
-
-# linux:	$(NAMELINUX)
 
 $(LIBFT) :
 	@make -C $(LIBFTDIR) all
 
 $(MLX) :
 	@make -C mlx_linux
-
-# $(NAMELINUX) : 	$(OBJS) $(INCLUDES)/$(NAME).h $(LIBFT) $(MLX)
-# 				@echo "Creating $(NAMELINUX).."
-# 				@echo "Your display variable is $$DISPLAY"
-# 				@$(CC) $(CFLAGS) -o $@ $^ $(LINUXMLXFLAGS)
-
-# $(NAME):		$(OBJS) $(INCLUDES)/$(NAME).h $(LIBFT)
-# 				@echo "Creating $(NAME).."
-# 				@echo "Your display variable is $$DISPLAY"
-# 				$(CC) $(LIBFTFLAGS) $(MACMLXFLAGS) $(OBJS) -o $(NAME)
 
 $(NAME):		$(OBJS) $(INCLUDES)/$(NAME).h $(LIBFT)
 				@echo "Creating $(NAME).."
