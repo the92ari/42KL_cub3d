@@ -31,7 +31,8 @@ void	handle_mlx(t_config *config)
 	mlx.map = config->map;
 	if (!mlx.mlx)
 		error_handler("Display var not configured", "main", EIO);
-	init_textures_mlx(mlx.mlx, &mlx.texture_cache, config->assets.textures, TEXTURES_SIZE);
+	init_textures_mlx(mlx.mlx, &mlx.texture_cache,
+		config->assets.textures, TEXTURES_SIZE);
 	init_colours_mlx(&mlx.colours, config->assets.colours, COLOURS_SIZE);
 	mlx.win = mlx_new_window(mlx.mlx, WIN_WIDTH, WIN_HEIGHT, "Cub3d");
 	mlx_hook(mlx.win, 17, 0, exit_program_mlx, &mlx);

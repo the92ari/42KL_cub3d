@@ -53,13 +53,13 @@ static int	check_enclosed(char **map, int x, int y)
 		return (false);
 	map[y][x] = 'X';
 	return (check_enclosed(map, x - 1, y - 1)
-			&& check_enclosed(map, x + 0, y - 1)
-			&& check_enclosed(map, x + 1, y - 1)
-			&& check_enclosed(map, x - 1, y - 0)
-			&& check_enclosed(map, x + 1, y - 0)
-			&& check_enclosed(map, x - 1, y + 1)
-			&& check_enclosed(map, x + 0, y + 1)
-			&& check_enclosed(map, x + 1, y + 1));
+		&& check_enclosed(map, x + 0, y - 1)
+		&& check_enclosed(map, x + 1, y - 1)
+		&& check_enclosed(map, x - 1, y - 0)
+		&& check_enclosed(map, x + 1, y - 0)
+		&& check_enclosed(map, x - 1, y + 1)
+		&& check_enclosed(map, x + 0, y + 1)
+		&& check_enclosed(map, x + 1, y + 1));
 }
 
 /*
@@ -91,10 +91,7 @@ static int	check_map(char **map)
 			if (map[y][x] == '0')
 			{
 				if (!check_enclosed(map, x, y))
-				{
-					printf("x: %d y: %d\n", x, y);
 					return (false);
-				}
 			}
 			++x;
 		}

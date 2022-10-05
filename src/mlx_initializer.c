@@ -25,7 +25,8 @@ Caches images into memory via the t_cache object.
 Return value:
 Returns nothing.
 */
-void	init_textures_mlx(void *p_mlx, t_cache *texture_cache, char *textures[], size_t size)
+void	init_textures_mlx(void *p_mlx, t_cache *texture_cache,
+char *textures[], size_t size)
 {
 	size_t	i;
 
@@ -59,8 +60,8 @@ void	init_colours_mlx(t_colours *colours_cache, char *colours[], size_t size)
 	{
 		rgb_values = ft_split(colours[i], ',');
 		colours_cache->colours[i] = 0 << 24 | ft_atoi(rgb_values[0]) << 16
-									| ft_atoi(rgb_values[1]) << 8
-									| ft_atoi(rgb_values[2]);
+			| ft_atoi(rgb_values[1]) << 8
+			| ft_atoi(rgb_values[2]);
 		ft_free2d(rgb_values);
 		++i;
 	}
