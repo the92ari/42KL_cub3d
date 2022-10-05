@@ -48,7 +48,7 @@ typedef struct s_data
 
 typedef struct s_cache
 {
-	union 
+	union
 	{
 		t_data	north;
 		t_data	south;
@@ -117,11 +117,12 @@ void	handle_mlx(t_config *config);
 int		exit_program_mlx(t_vars *mlx);
 
 // mlx_initializer.c
-void	init_textures_mlx(void *p_mlx, t_cache *texture_cache, char *textures[], int size);
-void	init_colours_mlx(t_colours *colours_cache, char *colours[], size_t size);
+void	init_textures_mlx(void *p_mlx, t_cache *texture_cache,
+			char *textures[], int size);
+void	init_colours_mlx(t_colours *colours_cache,
+			char *colours[], size_t size);
 
 // image_utils.c
 void	cache_image(void *mlx, t_data *img, char *path);
-
 
 #endif
