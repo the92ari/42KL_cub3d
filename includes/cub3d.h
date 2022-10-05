@@ -16,7 +16,7 @@
 # define WIN_HEIGHT 900
 
 enum e_textures{
-	NORTH,
+	NORTH = 0,
 	SOUTH,
 	EAST,
 	WEST,
@@ -24,7 +24,7 @@ enum e_textures{
 };
 
 enum e_colours{
-	FLOOR,
+	FLOOR = 0,
 	CEILING,
 	COLOURS_SIZE
 };
