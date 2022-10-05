@@ -118,7 +118,7 @@ int		exit_program_mlx(t_vars *mlx);
 
 // mlx_initializer.c
 void	init_textures_mlx(void *p_mlx, t_cache *texture_cache,
-			char *textures[], int size);
+		char *textures[], size_t size);
 void	init_colours_mlx(t_colours *colours_cache,
 			char *colours[], size_t size);
 
