@@ -6,7 +6,7 @@
 /*   By: kwang <kwang@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 14:30:41 by kwang             #+#    #+#             */
-/*   Updated: 2022/09/30 14:34:37 by kwang            ###   ########.fr       */
+/*   Updated: 2022/10/05 21:31:38 by kwang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,18 +52,17 @@ static void	validate_rgb(const char *config_str)
 
 	i = 0;
 	colours = ft_split(config_str, ',');
+	if (ft_2darrlen(colours) != 3)
+		error_handler("Invalid number of RGB values", "validate_rgb", EIO);
 	while (i < 3)
 	{
-		if (ft_2darrlen(colours) != 3)
-			error_handler("Too few RGB values", "validate_texture_rgb", EIO);
 		if (is_rgb_value(colours[i]) == false)
-			error_handler("Invalid RGB value", "validate_texture_rgb", EIO);
+			error_handler("Invalid RGB value", "validate_rgb", EIO);
 		if (ft_strlen(colours[i]) > 3)
-			error_handler("RGB value greater than 255",
-				"validate_texture_rgb", EIO);
+			error_handler("RGB value > 255 or < 0", "validate_rgb", EIO);
 		val = ft_atoi(colours[i]);
 		if (val < 0 || val > 255)
-			error_handler("Invalid RGB value", "validate_texture_rgb", EIO);
+			error_handler("RGB value > 255 or < 0", "validate_rgb", EIO);
 		++i;
 	}
 	ft_free2d(colours);
