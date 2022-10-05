@@ -48,16 +48,24 @@ typedef struct s_data
 
 typedef struct s_cache
 {
-	t_data	north;
-	t_data	south;
-	t_data	east;
-	t_data	west;
+	union 
+	{
+		t_data	north;
+		t_data	south;
+		t_data	east;
+		t_data	west;
+	};
+	t_data	textures[TEXTURES_SIZE];
 }	t_cache;
 
 typedef struct s_colours
 {
-	int		floor;
-	int		ceiling;
+	union
+	{
+		int		floor;
+		int		ceiling;
+	};
+	int	colours[COLOURS_SIZE];
 }	t_colours;
 
 typedef struct s_config
@@ -107,6 +115,9 @@ void	handle_mlx(t_config *config);
 
 // mlx_hook_functions.c
 int		exit_program_mlx(t_vars *mlx);
+
+// mlx_initializer.c
+void	init_textures_mlx(void *p_mlx, t_cache *texture_cache, char *textures[], int size)
 
 // image_utils.c
 void	cache_image(void *mlx, t_data *img, char *path);
