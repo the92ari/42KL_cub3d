@@ -6,7 +6,7 @@
 /*   By: kwang <kwang@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 21:57:22 by kwang             #+#    #+#             */
-/*   Updated: 2022/09/30 14:32:12 by kwang            ###   ########.fr       */
+/*   Updated: 2022/10/05 21:49:32 by kwang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,8 +177,8 @@ void	parse_config(const char *filename, t_config *config)
 	if (fd == -1)
 		error_handler("Failure to open file", "parse_map", 0);
 	cache_config(fd, &config_cache);
-	set_assets_config(&config->textures, (const char **)config_cache);
-	validate_assets_config(config->textures);
+	set_assets_config(&config->assets, (const char **)config_cache);
+	validate_assets_config(config->assets);
 	validate_map(config_cache + (TEXTURES_SIZE + COLOURS_SIZE));
 	cache_map(&config->map, config_cache + (TEXTURES_SIZE + COLOURS_SIZE));
 	ft_free2d(config_cache);
