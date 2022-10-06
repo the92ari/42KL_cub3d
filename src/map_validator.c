@@ -1,33 +1,6 @@
 #include "cub3d.h"
 
-/*
-Parameters:
-config_cache - The 2D map array stored in the stack
 
-Description:
-The function continuously iterates through each line in the
-2D array and find the longest line.
-
-Return value:
-Returns the length of the longest line.
-*/
-static int	get_longest_line(char **config_cache)
-{
-	int	max;
-	int	i;
-	int	arrlen;
-
-	i = 0;
-	max = 0;
-	arrlen = ft_2darrlen(config_cache);
-	while (i < arrlen)
-	{
-		if (ft_strlen(config_cache[i]) > max)
-			max = ft_strlen(config_cache[i]);
-		i++;
-	}
-	return (max);
-}
 
 /*
 Parameters:
@@ -44,7 +17,7 @@ Returns true if valid, false otherwise.
 */
 static int	check_enclosed(char **map, int x, int y)
 {
-	if (x < 0 || y < 0 || y > 9 || x == ft_strlen(map[y]))
+	if (x < 0 || y < 0 || y > ft_2darrlen(map) - 1 || x > ft_strlen(map[y]) - 1)
 		return (true);
 	if (map[y][x] == '1' || map[y][x] == 'X')
 		return (true);
@@ -79,16 +52,13 @@ static int	check_map(char **map)
 {
 	int	x;
 	int	y;
-	int	arrlen;
 	int	len;
 
 	y = 0;
-	arrlen = ft_2darrlen(map);
-	while (y < arrlen)
+	while (map[y] != NULL)
 	{
 		x = 0;
-		len = ft_strlen(map[y]);
-		while (x < len)
+		while (map[y][x] != '\0')
 		{
 			if (map[y][x] == '0')
 			{
@@ -99,6 +69,75 @@ static int	check_map(char **map)
 		}
 		++y;
 	}
+	return (true);
+}
+
+/*
+Parameters:
+map - The padded 2D map array
+i - The row for the 2D map array
+j - The index of the character in the row
+
+Description:
+Will check all 8 elements surrounding the element at index i, j
+and see if there's a space character.
+
+Return value:
+Returns false if found an invalid character. Returns true otherwise.
+*/
+static int	check_ply_position(char **map, int i, int j)
+{
+	int	row_limit;
+
+	row_limit = ft_2darrlen(map);
+	if (j <= 0 || i <= 0 || i == row_limit - 1 || j == ft_strlen(map[i]) - 1)
+		return (false);
+	return (!(map[i - 1][j - 1] == ' '
+		|| map[i - 0][j - 1] == ' '
+		|| map[i + 1][j - 1] == ' '
+		|| map[i - 1][j - 0] == ' '
+		|| map[i + 1][j - 0] == ' '
+		|| map[i - 1][j + 1] == ' '
+		|| map[i + 0][j + 1] == ' '
+		|| map[i + 1][j + 1] == ' '
+		));
+}
+
+/*
+Parameters:
+map - The padded 2D array of the map configuration
+
+Description:
+The function will loop through 'map' and counts the number
+of either N, S, W, E characters present in the map.
+
+Return value:
+Will return 0 if the count is not exactly 1. Returns 1 otherwise.
+*/
+static	int	check_duplicates(char **map)
+{
+	int	count;
+	int	i;
+	int	j;
+
+	count = 0;
+	i = -1;
+	while (map[++i] != NULL)
+	{
+		j = 0;
+		while (map[i][j] != '\0')
+		{
+			if (ft_strchr("NSWE", map[i][j]) != NULL)
+			{
+				if (check_ply_position(map, i, j) == false)
+					return (false);
+				count++;
+			}
+			j++;
+		}
+	}
+	if (count != 1)
+		return (false);
 	return (true);
 }
 
@@ -122,7 +161,9 @@ void	validate_map(char **config_cache)
 	temp_arr[ft_2darrlen(config_cache)] = NULL;
 	fill_space(temp_arr, ft_2darrlen(config_cache), longest);
 	copy_into_temp(temp_arr, config_cache, longest);
+	if (check_duplicates(temp_arr) == 0)
+		error_handler("Player position is not 1", "validate_map", EIO);
 	if (check_map(temp_arr) == false)
-		error_handler("Invalid map structure 1", "validate_map", EIO);
+		error_handler("Invalid map structure", "validate_map", EIO);
 	ft_free2d(temp_arr);
 }
