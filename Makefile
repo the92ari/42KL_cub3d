@@ -3,30 +3,34 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: kwang <kwang@student.42kl.edu.my>          +#+  +:+       +#+         #
+#    By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/26 17:03:19 by kwang             #+#    #+#              #
-#    Updated: 2022/10/05 22:39:33 by kwang            ###   ########.fr        #
+#    Updated: 2022/10/06 05:07:27 by wwan-taj         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS =	src/main.c \
-		src/error_handler.c \
-		src/file_validator.c \
-		src/assets_validator.c \
-		src/config_parsing_utils.c \
-		src/config_parser.c \
-		src/mlx_handler.c \
-		src/mlx_hook_functions.c \
-		src/mlx_initializer.c \
-		src/config_parser_helper.c \
-		src/image_utils.c \
-		src/map_validator.c \
-		src/map_validator_utils.c \
+SRC_FILES =		main.c \
+				error_handler.c \
+				file_validator.c \
+				assets_validator.c \
+				config_parsing_utils.c \
+				config_parser.c \
+				mlx_handler.c \
+				mlx_hook_functions.c \
+				mlx_initializer.c \
+				config_parser_helper.c \
+				image_utils.c \
+				map_validator.c \
+				map_validator_utils.c \
 
-OBJS = $(SRCS:.c=.o)
+OBJ_DIR = obj/
 
-OBJSMAC = $(SRCS:.c=.o)
+SRC_DIR = src/
+
+OBJS = $(addprefix $(OBJ_DIR), $(SRC_FILES:.c=.o))
+
+SRCS = $(addprefix $(SRC_DIR), $(SRC_FILES))
 
 CC = gcc
 
@@ -63,30 +67,38 @@ NAME = cub3d
 
 all : $(NAME)
 
+$(OBJ_DIR)%.o :	$(SRC_DIR)%.c
+				@mkdir -p obj
+				$(CC) $(CFLAGS) $< -c -o $@
+
 $(LIBFT) :
-	@make -C $(LIBFTDIR) all
+				@make -C $(LIBFTDIR) all
 
 $(MLX) :
-	@make -C mlx_linux
+				@make -C mlx_linux
 
 $(NAME):		$(OBJS) $(INCLUDES)/$(NAME).h $(LIBFT)
 				@echo "Creating $(NAME).."
 				@echo "Your display variable is $$DISPLAY"
 				$(CC) $(OBJS) -o $@ $(LIBFTFLAGS) $(MLXFLAGS)
 
-bonus : ${NAME}
+bonus : 		${NAME}
 
 clean :
-	@echo "Cleaning all .o files.."
-	# @make -C mlx_linux clean
-	@make -C $(LIBFTDIR) clean
-	@rm -f $(OBJS)
+				@echo "Cleaning all .o files.."
+				# @make -C mlx_linux clean
+				@make -C $(LIBFTDIR) clean
+				@rm -rf $(OBJ_DIR)
+				
 
-fclean : clean
-	@echo "Cleaning $(NAME)"
-	@make -C $(LIBFTDIR) fclean
-	@rm -f $(NAME)
+fclean : 		clean
+				@echo "Cleaning $(NAME)"
+				@make -C $(LIBFTDIR) fclean
+				@rm -f $(NAME)
 
-re : fclean all
+re : 			fclean all
 
-.PHONY : all bonus clean fclean re
+l	: 			all
+				./cub3d maps/basic_map.cub
+
+# .PHONY : all bonus clean fclean re

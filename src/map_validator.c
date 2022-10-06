@@ -3,9 +3,11 @@
 /*
 Parameters:
 config_cache - The 2D map array stored in the stack
+
 Description:
-The continuously iterates through each line in the 2D array
-and find the longest line.
+The function continuously iterates through each line in the
+2D array and find the longest line.
+
 Return value:
 Returns the length of the longest line.
 */
