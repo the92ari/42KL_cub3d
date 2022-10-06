@@ -74,12 +74,22 @@ typedef struct s_config
 	char		**map;
 }	t_config;
 
+typedef struct s_player
+{
+	struct 
+	{
+		float	x;
+		float	y;
+	}	coords;
+}	t_player;
+
 typedef struct s_vars
 {
 	void		*mlx;
 	void		*win;
 	t_cache		texture_cache;
 	t_colours	colours;
+	t_player	player;
 	char		**map;
 }	t_vars;
 
