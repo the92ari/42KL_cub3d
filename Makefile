@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+         #
+#    By: kwang <kwang@student.42kl.edu.my>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/26 17:03:19 by kwang             #+#    #+#              #
-#    Updated: 2022/10/06 05:07:27 by wwan-taj         ###   ########.fr        #
+#    Updated: 2022/10/06 14:34:52 by kwang            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,7 @@ SRCS = $(addprefix $(SRC_DIR), $(SRC_FILES))
 CC = gcc
 
 # CFLAGS = -Wall -Wextra -Werror -I$(INCLUDES) -I/usr/include/ -Imlx_linux -O3
-CFLAGS = -I$(INCLUDES) -I/usr/include/
+CFLAGS = -I$(INCLUDES) -I/usr/include/ -Ilibft
 
 LINUXMLXFLAGS = -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
 
@@ -98,7 +98,7 @@ fclean : 		clean
 
 re : 			fclean all
 
-l	: 			all
+run	: 			all
 				./cub3d maps/basic_map.cub
 
-# .PHONY : all bonus clean fclean re
+.PHONY : all bonus clean fclean re run
