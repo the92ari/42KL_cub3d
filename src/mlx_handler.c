@@ -12,14 +12,35 @@
 
 #include "cub3d.h"
 
+/*
+Parameters:
+
+Description:
+
+Return value:
+
+*/
 int	key_handler(int key, t_vars *mlx)
 {
-	if (key == 65307 || 53)
+	if (key == 65307 || key == 53)
 	{
 		printf("Quitting programme\n");
 		exit_program_mlx(mlx);
 	}
-	return (0);
+	return (EXIT_SUCCESS);
+}
+
+/*
+Parameters:
+
+Description:
+
+Return value:
+
+*/
+int	screen_renderer(t_vars *vars)
+{
+	return(EXIT_SUCCESS);
 }
 
 /*
@@ -34,18 +55,19 @@ Returns nothing.
 */
 void	handle_mlx(t_config *config)
 {
-	t_vars	mlx;
+	t_vars	vars;
 
-	mlx = (t_vars){};
-	mlx.mlx = mlx_init();
-	mlx.map = config->map;
-	if (!mlx.mlx)
+	vars = (t_vars){};
+	vars.mlx = mlx_init();
+	vars.map = config->map;
+	if (!vars.mlx)
 		error_handler("Display var not configured", "main", EIO);
-	init_textures_mlx(mlx.mlx, &mlx.texture_cache,
+	init_textures_mlx(vars.mlx, &vars.texture_cache,
 		config->assets.textures, TEXTURES_SIZE);
-	init_colours_mlx(&mlx.colours, config->assets.colours, COLOURS_SIZE);
-	mlx.win = mlx_new_window(mlx.mlx, WIN_WIDTH, WIN_HEIGHT, "Cub3d");
-	mlx_hook(mlx.win, 17, 0, exit_program_mlx, &mlx);
-	mlx_key_hook(mlx.win, key_handler, &mlx);
-	mlx_loop(mlx.mlx);
+	init_colours_mlx(&vars.colours, config->assets.colours, COLOURS_SIZE);
+	vars.win = mlx_new_window(vars.mlx, WIN_WIDTH, WIN_HEIGHT, "Cub3d");
+	mlx_hook(vars.win, 17, 0, exit_program_mlx, &vars);
+	mlx_key_hook(vars.win, key_handler, &vars);
+	mlx_loop_hook(vars.mlx, screen_renderer, &vars);
+	mlx_loop(vars.mlx);
 }

@@ -106,6 +106,7 @@ int		is_rgb_value(const char *str);
 // map_validator_utils.c
 void	fill_space(char **temp_arr, int arrlen, int size);
 void	copy_into_temp(char **dst, char **src, int len);
+int		get_longest_line(char **config_cache);
 
 // map_validator.c
 void	validate_map(char **config_cache);

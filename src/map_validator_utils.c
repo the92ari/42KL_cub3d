@@ -51,3 +51,32 @@ void	copy_into_temp(char **dst, char **src, int len)
 		i++;
 	}
 }
+
+/*
+Parameters:
+config_cache - The 2D map array stored in the stack
+
+Description:
+The function continuously iterates through each line in the
+2D array and find the longest line.
+
+Return value:
+Returns the length of the longest line.
+*/
+int	get_longest_line(char **config_cache)
+{
+	int	max;
+	int	i;
+	int	arrlen;
+
+	i = 0;
+	max = 0;
+	arrlen = ft_2darrlen(config_cache);
+	while (i < arrlen)
+	{
+		if (ft_strlen(config_cache[i]) > max)
+			max = ft_strlen(config_cache[i]);
+		i++;
+	}
+	return (max);
+}
