@@ -6,7 +6,7 @@
 /*   By: kwang <kwang@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 16:40:08 by kwang             #+#    #+#             */
-/*   Updated: 2022/10/05 21:51:39 by kwang            ###   ########.fr       */
+/*   Updated: 2022/10/06 18:45:46 by kwang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ Caches images into memory via the t_cache object.
 Return value:
 Returns nothing.
 */
-void	init_textures_mlx(void *p_mlx, t_cache *texture_cache,
+void	init_config_textures_mlx(void *p_mlx, t_cache *texture_cache,
 char *textures[], size_t size)
 {
 	size_t	i;
@@ -59,7 +59,7 @@ void	init_colours_mlx(t_colours *colours_cache, char *colours[], size_t size)
 	while (i < size)
 	{
 		rgb_values = ft_split(colours[i], ',');
-		colours_cache->colours[i] = 0 << 24 | ft_atoi(rgb_values[0]) << 16
+		colours_cache->bg.colours[i] = 0 << 24 | ft_atoi(rgb_values[0]) << 16
 			| ft_atoi(rgb_values[1]) << 8
 			| ft_atoi(rgb_values[2]);
 		ft_free2d(rgb_values);

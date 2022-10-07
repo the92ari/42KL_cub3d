@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mlx_handler.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: kwang <kwang@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 14:10:54 by kwang             #+#    #+#             */
-/*   Updated: 2022/10/06 05:40:53 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/10/07 11:43:55 by kwang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,9 @@ void	handle_mlx(t_config *config)
 	vars.map = config->map;
 	if (!vars.mlx)
 		error_handler("Display var not configured", "main", EIO);
-	init_textures_mlx(vars.mlx, &vars.texture_cache,
-		config->assets.textures, TEXTURES_SIZE);
 	init_colours_mlx(&vars.colours, config->assets.colours, COLOURS_SIZE);
+	init_config_textures_mlx(vars.mlx, &vars.texture_cache,
+		config->assets.textures, TEXTURES_SIZE);
 	vars.win = mlx_new_window(vars.mlx, WIN_WIDTH, WIN_HEIGHT, "Cub3d");
 	mlx_hook(vars.win, 17, 0, exit_program_mlx, &vars);
 	mlx_key_hook(vars.win, key_handler, &vars);
