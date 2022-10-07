@@ -6,7 +6,7 @@
 /*   By: kwang <kwang@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 16:40:08 by kwang             #+#    #+#             */
-/*   Updated: 2022/10/06 18:45:46 by kwang            ###   ########.fr       */
+/*   Updated: 2022/10/07 14:02:18 by kwang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,5 +64,41 @@ void	init_colours_mlx(t_colours *colours_cache, char *colours[], size_t size)
 			| ft_atoi(rgb_values[2]);
 		ft_free2d(rgb_values);
 		++i;
+	}
+}
+
+/*
+Parameters:
+player - Address of player structure
+map - Loops through map to find player position and
+	sets the respective coordinate in player structure
+
+Description:
+Loops through map to find player position and
+sets the respective coordinate in player structure
+
+Return value:
+Returns nothing.
+*/
+void	init_player_mlx(t_player *player, char **map)
+{
+	size_t	x;
+	size_t	y;
+
+	*player = (t_player){};
+	y = 0;
+	while (map[y] != NULL)
+	{
+		x = 0;
+		while (map[y][x] != '\0')
+		{
+			if (ft_strchr("NSEW" , map[y][x]) != NULL)
+			{
+				player->coords.x = x;
+				player->coords.y = y;
+			}
+			++x;
+		}
+		++y;
 	}
 }

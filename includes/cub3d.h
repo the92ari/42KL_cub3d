@@ -142,6 +142,7 @@ void	init_config_textures_mlx(void *p_mlx, t_cache *texture_cache,
 		char *textures[], size_t size);
 void	init_colours_mlx(t_colours *colours_cache,
 			char *colours[], size_t size);
+void	init_player_mlx(t_player *player, char **map);
 
 // image_utils.c
 void	cache_image(void *mlx, t_data *img, char *path);
