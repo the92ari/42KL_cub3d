@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 14:10:54 by kwang             #+#    #+#             */
-/*   Updated: 2022/10/09 16:13:29 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/10/09 23:30:37 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,8 @@ void	handle_mlx(t_config *config)
 	mlx_key_hook(vars.win, key_handler, &vars);
 	mlx_loop_hook(vars.mlx, screen_renderer, &vars);
 	mlx_put_image_to_window(vars.mlx, vars.win, vars.texture_cache.bg.img, 0, 0);
-	mlx_put_image_to_window(vars.mlx, vars.win, vars.texture_cache.minimap_bg.img, 1138, 0);
-	mlx_put_image_to_window(vars.mlx, vars.win, vars.texture_cache.minimap_player.img, 1229, 77);
+	mlx_put_image_to_window(vars.mlx, vars.win, vars.texture_cache.minimap_bg.img, 1139, 0);
+	// mlx_put_image_to_window(vars.mlx, vars.win, vars.texture_cache.minimap_obs.img, 1150, 100);
+	// mlx_put_image_to_window(vars.mlx, vars.win, vars.texture_cache.minimap_player.img, 1252, 113);
 	mlx_loop(vars.mlx);
 }

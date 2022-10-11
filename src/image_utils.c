@@ -6,7 +6,7 @@
 /*   By: wwan-taj <wwan-taj@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 17:11:41 by kwang             #+#    #+#             */
-/*   Updated: 2022/10/09 16:13:50 by wwan-taj         ###   ########.fr       */
+/*   Updated: 2022/10/09 21:53:44 by wwan-taj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,18 @@ void	cache_image(void *mlx, t_data *img, char *path)
 			&img->size_line, &img->endian);
 }
 
+/*
+Parameters:
+bg - data t_data sruct of the background image
+colour - the colour taken from the config
+
+Description:
+Loops through half of the background image's pixels and sets each pixel's colour
+to the colour passed in as parameter
+
+Return value:
+Returns nothing
+*/
 static void	ceiling_drawer(t_data *bg, int colour)
 {
 	int	i;
@@ -32,14 +44,29 @@ static void	ceiling_drawer(t_data *bg, int colour)
 		j = 0;
 		while (j < WIN_WIDTH * 4)
 		{
-			bg->addr[j] = colour;
-			j++;
+			bg->addr[j + 0] = (colour) & 0xFF;
+			bg->addr[j + 1] = (colour >> 8) & 0xFF;
+			bg->addr[j + 2] = (colour >> 16) & 0xFF;
+			bg->addr[j + 3] = (colour >> 24);
+			j+= 4;
 		}
 		bg->addr += bg->size_line;
 		i++;
 	}
 }
 
+/*
+Parameters:
+bg - data t_data sruct of the background image
+colour - the colour taken from the config
+
+Description:
+Loops through half of the background image's pixels and sets each pixel's colour
+to the colour passed in as parameter
+
+Return value:
+Returns nothing
+*/
 static void	floor_drawer(t_data *bg, int colour)
 {
 	int	i;
@@ -51,14 +78,30 @@ static void	floor_drawer(t_data *bg, int colour)
 		j = 0;
 		while (j < WIN_WIDTH * 4)
 		{
-			bg->addr[j] = colour;
-			j++;
+			bg->addr[j + 0] = (colour) & 0xFF;
+			bg->addr[j + 1] = (colour >> 8) & 0xFF;
+			bg->addr[j + 2] = (colour >> 16) & 0xFF;
+			bg->addr[j + 3] = (colour >> 24);
+			j+= 4;
 		}
 		bg->addr += bg->size_line;
 		i++;
 	}
 }
 
+/*
+Paremeters:
+data - the t_data type of an mlx image
+w - the width of the mlx image
+h - height of the mlx image
+colour - the colour to set the image to
+
+Description:
+Will draw a solid rectangle
+
+Return value:
+Returns nothing
+*/
 void	rectangle_drawer(t_data *data, int w, int h, int colour)
 {
 	int i;
@@ -70,8 +113,11 @@ void	rectangle_drawer(t_data *data, int w, int h, int colour)
 		j = 0;
 		while (j < (w * 4))
 		{
-			data->addr[j] = colour; // need to properly assign colours by bytes
-			j++;
+			data->addr[j + 0] = (colour) & 0xFF;
+			data->addr[j + 1] = (colour >> 8) & 0xFF;
+			data->addr[j + 2] = (colour >> 16) & 0xFF;
+			data->addr[j + 3] = (colour >> 24);
+			j += 4;
 		}
 		data->addr += data->size_line;
 		i++;
@@ -82,17 +128,6 @@ void	init_bg_mlx(t_vars *vars, void *mlx, t_data *bg)
 {
 	bg->img = mlx_new_image(mlx, WIN_WIDTH, WIN_HEIGHT);
 	bg->addr = mlx_get_data_addr(bg->img, &bg->bpp, &bg->size_line, &bg->endian);
-}
-
-void	init_minimap_assets(void *mlx, t_cache *cache)
-{
-	cache->minimap_bg.img = mlx_new_image(mlx, WIN_WIDTH / 5, WIN_WIDTH / 5); // adjust the size
-	cache->minimap_player.img = mlx_new_image(mlx, WIN_WIDTH / 25, WIN_WIDTH / 25); // adjust the size
-	cache->minimap_obs.img = mlx_new_image(mlx, WIN_WIDTH / 25, WIN_WIDTH / 25); // adjust the size
-	cache->minimap_bg.addr = mlx_get_data_addr(cache->minimap_bg.img, &cache->minimap_bg.bpp, &cache->minimap_bg.size_line, &cache->minimap_bg.endian);
-	cache->minimap_player.addr = mlx_get_data_addr(cache->minimap_player.img, &cache->minimap_player.bpp, &cache->minimap_player.size_line, &cache->minimap_player.endian);
-	cache->minimap_obs.addr = mlx_get_data_addr(cache->minimap_obs.img, &cache->minimap_obs.bpp, &cache->minimap_obs.size_line, &cache->minimap_obs.endian);
-	rectangle_drawer(&cache->minimap_bg, WIN_WIDTH / 5, WIN_WIDTH / 5, 0); // adjust the colour
-	rectangle_drawer(&cache->minimap_player, WIN_WIDTH / 25, WIN_WIDTH / 25, 0xFFFFF); // adjust the colour
-	rectangle_drawer(&cache->minimap_bg, WIN_WIDTH / 25, WIN_WIDTH / 25, 0xFFFFF); // adjust the colour
+	ceiling_drawer(bg, vars->colours.bg.ceiling);
+	floor_drawer(bg, vars->colours.bg.floor);
 }
